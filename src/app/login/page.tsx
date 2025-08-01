@@ -42,12 +42,20 @@ export default function LoginPage() {
             <Button variant="outline">Google</Button>
             <Button variant="outline">GitHub</Button>
           </div>
-          <p className="text-center text-sm text-muted-foreground">
-            Don&apos;t have an account?{' '}
-            <Link href="#" className="underline hover:text-primary">
-              Sign up
-            </Link>
-          </p>
+          <div className="text-center text-sm text-muted-foreground">
+            <p className="mb-2">
+              Don&apos;t have an account?{' '}
+              <Link href="#" className="underline hover:text-primary">
+                Sign up
+              </Link>
+            </p>
+            <p>
+              Are you an administrator?{' '}
+              <Link href="/admin/login" className="underline hover:text-primary">
+                Login here
+              </Link>
+            </p>
+          </div>
         </CardFooter>
       </Card>
     </div>
