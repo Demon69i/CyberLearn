@@ -9,8 +9,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Shield } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Info } from 'lucide-react';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -52,14 +50,6 @@ export default function LoginPage() {
           <CardDescription>Enter your credentials to access your courses</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <Alert variant="default">
-              <Info className="h-4 w-4" />
-              <AlertTitle>Prototype Credentials</AlertTitle>
-              <AlertDescription>
-                <p className="font-mono text-xs"><strong>Email:</strong> user@example.com</p>
-                <p className="font-mono text-xs"><strong>Password:</strong> password</p>
-              </AlertDescription>
-          </Alert>
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input 
@@ -81,6 +71,7 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onKeyPress={handleKeyPress}
+              placeholder="password"
             />
           </div>
         </CardContent>
