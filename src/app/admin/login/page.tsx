@@ -7,8 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ShieldAlert } from 'lucide-react';
+import { ShieldAlert, Info } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState('');
@@ -48,6 +49,14 @@ export default function AdminLoginPage() {
           <CardDescription>Enter your administrator credentials to manage courses.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
+          <Alert variant="destructive">
+              <Info className="h-4 w-4" />
+              <AlertTitle>Prototype Credentials</AlertTitle>
+              <AlertDescription>
+                <p className="font-mono text-xs"><strong>Email:</strong> imtiazmahmudemon7@gmail.com</p>
+                <p className="font-mono text-xs"><strong>Password:</strong> Imtiaz1122@#&</p>
+              </AlertDescription>
+          </Alert>
           <div className="space-y-2">
             <Label htmlFor="email">Admin Email</Label>
             <Input 
