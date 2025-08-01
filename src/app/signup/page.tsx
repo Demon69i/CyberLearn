@@ -18,14 +18,16 @@ export default function SignupPage() {
   const { toast } = useToast();
 
   const handleSignup = () => {
-    // Prototype signup: Pass credentials to login page via query params
     if (email && password && name) {
+      // Save user data to localStorage
+      const user = { name, email, password };
+      localStorage.setItem('cyberlearn_user', JSON.stringify(user));
+
       toast({
         title: "Signup Successful!",
         description: "You can now log in with your new credentials.",
       });
-      const queryParams = new URLSearchParams({ email, password }).toString();
-      router.push(`/login?${queryParams}`);
+      router.push('/login');
     } else {
       toast({
         title: "Signup Failed",

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,30 +14,21 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { toast } = useToast();
-
-  const registeredEmail = searchParams.get('email');
-  const registeredPassword = searchParams.get('password');
-  
-  // Pre-fill fields if coming from signup
-  useEffect(() => {
-    if (registeredEmail) {
-      setEmail(registeredEmail);
-    }
-    if (registeredPassword) {
-      setPassword(registeredPassword);
-    }
-  }, [registeredEmail, registeredPassword]);
-
 
   const handleLogin = () => {
     const defaultUser = 'user@example.com';
     const defaultPass = 'password';
 
+    let registeredUser = null;
+    const storedUser = localStorage.getItem('cyberlearn_user');
+    if (storedUser) {
+      registeredUser = JSON.parse(storedUser);
+    }
+
     const isValid = 
       (email === defaultUser && password === defaultPass) ||
-      (email && password && email === registeredEmail && password === registeredPassword);
+      (registeredUser && email === registeredUser.email && password === registeredUser.password);
 
     if (isValid) {
       toast({
