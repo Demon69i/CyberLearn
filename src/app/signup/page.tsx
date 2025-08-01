@@ -18,12 +18,21 @@ export default function SignupPage() {
   const { toast } = useToast();
 
   const handleSignup = () => {
-    // Prototype signup: in a real app, this would create a user
-    toast({
-      title: "Signup Successful!",
-      description: "You can now log in with your credentials.",
-    });
-    router.push('/login');
+    // Prototype signup: Pass credentials to login page via query params
+    if (email && password && name) {
+      toast({
+        title: "Signup Successful!",
+        description: "You can now log in with your new credentials.",
+      });
+      const queryParams = new URLSearchParams({ email, password }).toString();
+      router.push(`/login?${queryParams}`);
+    } else {
+      toast({
+        title: "Signup Failed",
+        description: "Please fill in all fields.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (

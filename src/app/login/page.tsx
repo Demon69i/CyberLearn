@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,11 +14,32 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { toast } = useToast();
 
+  const registeredEmail = searchParams.get('email');
+  const registeredPassword = searchParams.get('password');
+  
+  // Pre-fill fields if coming from signup
+  useEffect(() => {
+    if (registeredEmail) {
+      setEmail(registeredEmail);
+    }
+    if (registeredPassword) {
+      setPassword(registeredPassword);
+    }
+  }, [registeredEmail, registeredPassword]);
+
+
   const handleLogin = () => {
-    // Prototype login: in a real app, this would be an API call
-    if (email === 'user@example.com' && password === 'password') {
+    const defaultUser = 'user@example.com';
+    const defaultPass = 'password';
+
+    const isValid = 
+      (email === defaultUser && password === defaultPass) ||
+      (email && password && email === registeredEmail && password === registeredPassword);
+
+    if (isValid) {
       toast({
         title: "Login Successful",
         description: "Welcome back!",
