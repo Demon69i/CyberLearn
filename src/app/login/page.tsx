@@ -1,11 +1,46 @@
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Shield } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Info } from 'lucide-react';
 
 export default function LoginPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const router = useRouter();
+  const { toast } = useToast();
+
+  const handleLogin = () => {
+    // Prototype login: in a real app, this would be an API call
+    if (email === 'user@example.com' && password === 'password') {
+      toast({
+        title: "Login Successful",
+        description: "Welcome back!",
+      });
+      router.push('/');
+    } else {
+      toast({
+        title: "Login Failed",
+        description: "Please check your email and password.",
+        variant: "destructive",
+      });
+    }
+  };
+  
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleLogin();
+    }
+  };
+
   return (
     <div className="flex items-center justify-center py-12">
       <Card className="w-full max-w-md shadow-2xl shadow-primary/10">
@@ -17,17 +52,40 @@ export default function LoginPage() {
           <CardDescription>Enter your credentials to access your courses</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
+          <Alert variant="default">
+              <Info className="h-4 w-4" />
+              <AlertTitle>Prototype Credentials</AlertTitle>
+              <AlertDescription>
+                <p className="font-mono text-xs"><strong>Email:</strong> user@example.com</p>
+                <p className="font-mono text-xs"><strong>Password:</strong> password</p>
+              </AlertDescription>
+          </Alert>
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" placeholder="hacker@example.com" required />
+            <Input 
+              id="email" 
+              type="email" 
+              placeholder="user@example.com" 
+              required 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              onKeyPress={handleKeyPress}
+            />
           </div>
           <div className="space-y-2">
             <Label htmlFor="password">Password</Label>
-            <Input id="password" type="password" required />
+            <Input 
+              id="password" 
+              type="password" 
+              required 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              onKeyPress={handleKeyPress}
+            />
           </div>
         </CardContent>
         <CardFooter className="flex flex-col gap-4">
-          <Button className="w-full">Sign In</Button>
+          <Button className="w-full" onClick={handleLogin}>Sign In</Button>
           <div className="relative w-full">
             <div className="absolute inset-0 flex items-center">
               <span className="w-full border-t" />
@@ -45,7 +103,7 @@ export default function LoginPage() {
           <div className="text-center text-sm text-muted-foreground">
             <p className="mb-2">
               Don&apos;t have an account?{' '}
-              <Link href="#" className="underline hover:text-primary">
+              <Link href="/signup" className="underline hover:text-primary">
                 Sign up
               </Link>
             </p>

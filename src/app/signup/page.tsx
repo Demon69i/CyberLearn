@@ -7,77 +7,75 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ShieldAlert } from 'lucide-react';
+import { UserPlus } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
-export default function AdminLoginPage() {
+export default function SignupPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const router = useRouter();
   const { toast } = useToast();
 
-  const handleLogin = () => {
-    // In a real application, you would make an API call to authenticate the user.
-    // For this prototype, we are using hardcoded credentials.
-    if (email === 'imtiazmahmudemon7@gmail.com' && password === 'Imtiaz1122@#&') {
-      // In a real app, you would set a session cookie or token here.
-      router.push('/admin/dashboard');
-    } else {
-      toast({
-        title: "Login Failed",
-        description: "Please check your admin email and password and try again.",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      handleLogin();
-    }
+  const handleSignup = () => {
+    // Prototype signup: in a real app, this would create a user
+    toast({
+      title: "Signup Successful!",
+      description: "You can now log in with your credentials.",
+    });
+    router.push('/login');
   };
 
   return (
     <div className="flex items-center justify-center py-12">
-      <Card className="w-full max-w-md shadow-2xl shadow-destructive/20">
+      <Card className="w-full max-w-md shadow-2xl shadow-primary/10">
         <CardHeader className="text-center space-y-2">
           <div className="flex justify-center">
-            <ShieldAlert className="w-12 h-12 text-destructive" />
+            <UserPlus className="w-12 h-12 text-primary" />
           </div>
-          <CardTitle className="text-2xl font-headline">Admin Access</CardTitle>
-          <CardDescription>Enter your administrator credentials to manage courses.</CardDescription>
+          <CardTitle className="text-2xl font-headline">Create an Account</CardTitle>
+          <CardDescription>Join CyberLearn to start your hacking journey</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="email">Admin Email</Label>
+            <Label htmlFor="name">Full Name</Label>
             <Input 
-              id="email" 
-              type="email" 
-              placeholder="admin@cyberlearn.com" 
+              id="name" 
+              type="text" 
+              placeholder="John Doe" 
               required 
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              onKeyPress={handleKeyPress}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Admin Password</Label>
+            <Label htmlFor="email">Email</Label>
+            <Input 
+              id="email" 
+              type="email" 
+              placeholder="hacker@example.com" 
+              required 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="password">Password</Label>
             <Input 
               id="password" 
               type="password" 
               required 
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              onKeyPress={handleKeyPress}
             />
           </div>
         </CardContent>
         <CardFooter className="flex flex-col gap-4">
-          <Button variant="destructive" className="w-full" onClick={handleLogin}>Sign In as Admin</Button>
+          <Button className="w-full" onClick={handleSignup}>Sign Up</Button>
           <p className="text-center text-sm text-muted-foreground">
-            Not an admin?{' '}
+            Already have an account?{' '}
             <Link href="/login" className="underline hover:text-primary">
-              Return to user login
+              Login
             </Link>
           </p>
         </CardFooter>
