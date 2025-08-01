@@ -18,6 +18,7 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { useToast } from '@/hooks/use-toast';
+import { Label } from '@/components/ui/label';
 
 export default function AdminDashboardPage() {
   const [courses, setCourses] = useState<Course[]>(initialCourses);
@@ -108,6 +109,7 @@ export default function AdminDashboardPage() {
               <CardTitle className="font-headline">{course.title}</CardTitle>
             </CardHeader>
             <CardContent className="flex-grow">
+              <img src={course.thumbnail} alt={course.title} className="w-full h-40 object-cover rounded-md mb-4" />
               <p className="text-muted-foreground line-clamp-3">{course.description}</p>
             </CardContent>
             <CardFooter className="flex gap-2">
@@ -151,15 +153,34 @@ export default function AdminDashboardPage() {
                 <DialogTitle>{courses.some(c => c.id === editingCourse.id) ? 'Edit Course' : 'Add New Course'}</DialogTitle>
               </DialogHeader>
               <div className="max-h-[70vh] overflow-y-auto p-4 space-y-4">
-                <Input name="title" value={editingCourse.title} onChange={handleInputChange} placeholder="Course Title" className="text-lg font-bold" />
-                <Textarea name="description" value={editingCourse.description} onChange={handleInputChange} placeholder="Short Description" />
-                <Textarea name="longDescription" value={editingCourse.longDescription} onChange={handleInputChange} placeholder="Long Description" rows={5}/>
-                <Input name="instructor" value={editingCourse.instructor} onChange={handleInputChange} placeholder="Instructor Name" />
-                <select name="level" value={editingCourse.level} onChange={handleInputChange} className="w-full p-2 border rounded-md bg-card">
-                  <option value="Beginner">Beginner</option>
-                  <option value="Intermediate">Intermediate</option>
-                  <option value="Advanced">Advanced</option>
-                </select>
+                <div>
+                  <Label htmlFor="title">Course Title</Label>
+                  <Input id="title" name="title" value={editingCourse.title} onChange={handleInputChange} placeholder="Course Title" className="text-lg font-bold" />
+                </div>
+                <div>
+                  <Label htmlFor="thumbnail">Thumbnail URL</Label>
+                  <Input id="thumbnail" name="thumbnail" value={editingCourse.thumbnail} onChange={handleInputChange} placeholder="https://example.com/image.png" />
+                </div>
+                <div>
+                  <Label htmlFor="description">Short Description</Label>
+                  <Textarea id="description" name="description" value={editingCourse.description} onChange={handleInputChange} placeholder="Short Description" />
+                </div>
+                <div>
+                  <Label htmlFor="longDescription">Long Description</Label>
+                  <Textarea id="longDescription" name="longDescription" value={editingCourse.longDescription} onChange={handleInputChange} placeholder="Long Description" rows={5}/>
+                </div>
+                <div>
+                  <Label htmlFor="instructor">Instructor Name</Label>
+                  <Input id="instructor" name="instructor" value={editingCourse.instructor} onChange={handleInputChange} placeholder="Instructor Name" />
+                </div>
+                <div>
+                  <Label htmlFor="level">Difficulty Level</Label>
+                  <select id="level" name="level" value={editingCourse.level} onChange={handleInputChange} className="w-full p-2 border rounded-md bg-card">
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Advanced">Advanced</option>
+                  </select>
+                </div>
                 
                 <h3 className="font-bold text-xl mt-4 border-t pt-4">Lessons</h3>
                 <div className="space-y-3">
