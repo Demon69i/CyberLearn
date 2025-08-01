@@ -1,4 +1,4 @@
-# Firebase Studio
+# LearnCS
 
 This is a NextJS starter in Firebase Studio.
 
